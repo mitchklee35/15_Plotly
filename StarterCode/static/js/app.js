@@ -42,7 +42,7 @@ function buildbubble(names, sample_values, layout) {
 };
 
 // Load source data, make data promise, and push data to array
-d3.json("samples.json").then(function (data) {
+d3.json("data/samples.json").then(function (data) {
   sourceData.push(data);
   console.log("sourceData", sourceData)
 
@@ -134,4 +134,4 @@ d3.json("samples.json").then(function (data) {
 });
 
 // Set data promise
-const dataPromise = d3.json("samples.json");
+const dataPromise = d3.json("data/samples.json");
