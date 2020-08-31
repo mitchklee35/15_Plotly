@@ -1,65 +1,137 @@
 // // Pull data and create promise while using localhost:8000
+var sourceData = [];
 
-function buildMetadata(sample) {
-    d3.json("/data/samples.json").then(function(sample) {
-        
-        var sample_metadata = d3.select("#sample-metadata");
-        // Clears any existing meta-data
-        sample_metadata.html("");
+function buildPlot(top_values, top_otu) {
 
-        Object.defineProperties(sample).forEach(([key, value]) => {
-            var roe = sample_metadata.append("p");
-            HTMLTableRowElement.text('${key}: ${value}');
-        })
-    }); 
-}; //Ends buildMetadata function
-// console.log(sample);
+  // Build trace to plot the chart in reverse order
+  var trace1 = [{
+    type: "bar",
+    x: top_values.reverse(),
+    y: top_otu.reverse(),
+    orientation: "h",
+    // text: hoverLabels.reverse(),
+    title: "OTU ID"
+  }];
 
-// Promise Pending
-const dataPromise = d3.json("/data/samples.json");
-console.log("Data Promise: ", dataPromise);
+  // Plot newplot onto "bar" in html using trace1
+  Plotly.newPlot("bar", trace1);
 
-// Create and merge sample data and meta data
+  // End Build bar chart
+}
 
+// Build bubble chart
+function buildbubble(names, sample_values, layout) {
 
+  // Trace for bubble plot
+  var trace2 = [{
+    x: names,
+    y: sample_values,
+    // text: otuLabels,
+    mode: 'markers',
+    marker: {
+      size: sample_values,
+      color: names
+    }
+  }]
+  var layout = {
+    xaxis: {
+      title: "OTU ID"
+    }
+  };
+  Plotly.newPlot("bubble", trace2, layout);
+};
 
-// Create a horizontal bar chart
-// Use sample_values as the values for the bar chart.
-// Use otu_ids as the labels for the bar chart.
-// Use otu_labels as the hovertext for the chart.
-// var sample_values = sample.sample_values
-function buildPlot(sample) {
+// Load source data, make data promise, and push data to array
+d3.json("samples.json").then(function (data) {
+  sourceData.push(data);
+  console.log("sourceData", sourceData)
+
+  // Populate dropdown menu
+  var dropdownList = sourceData[0].names;
+  var dropdownID = -1
+  dropdownList.forEach(function (item) {
+    var option = document.createElement("option");
+    option.text = item;
+    option.id = dropdownID + 1;
+    document.getElementById("selDataset").appendChild(option);
+    dropdownID += 1
+    // End dropdown menu
+  });
+
+  // Display and filter samples
+  var sample_values = sourceData[0].samples[0].sample_values;
+  var top_values = [];
+  top_values = sample_values.slice(0, 10);
+
+  // Display and filter otu_ids
+  var names = sourceData[0].samples[0].otu_ids;
+  var top_otu = [];
+  top_otu = names.slice(0, 10).map((item, i) => {
+    return `OTU ${item}`;
+  });
+
+  // Display hover labels
+  var otuLabels = sourceData[0].samples[0].otu_labels;
+  var hoverLabels = [];
+  hoverLabels = otuLabels.slice(0, 10);
+
+  // Print default charts
+  buildPlot(top_values, top_otu)
+  buildbubble(names, sample_values)
+
+  // Build demographic info
+  var name = sourceData[0].metadata[0].id;
+  var ethnicity = sourceData[0].metadata[0].ethnicity;
+  var gender = sourceData[0].metadata[0].gender;
+  var age = sourceData[0].metadata[0].age;
+  var location = sourceData[0].metadata[0].location;
+  var bbtype = sourceData[0].metadata[0].bbtype;
+  var wfreq = sourceData[0].metadata[0].wfreq;
+  document.getElementById("sample-metadata")
+    .innerHTML += `<p><b>ID: </b>${name}<br><b>Ethnicity: </b>${ethnicity}<br><b>Gender: </b>${gender}<br><b>Age: </b>${age}<br><b>Location: </b>${location}<br><b>BBType: </b>${bbtype}<br><b>WFreq: </b>${wfreq}</p>`;
+
+  // Fucntion for dropdown menu
+  document.getElementById("selDataset").onchange = function () {
+
+    // Depopulate  demographic info
+    document.getElementById("sample-metadata")
+      .innerHTML = ""
+
+    // Set dropdown
+    var dropdownMenu = document.getElementById("selDataset");
+    var dropdownID = dropdownMenu.selectedIndex
+
+    // Data points for bar and bubble chart when changing drop down menu. 
+    var names = sourceData[0].samples[dropdownID].otu_ids;
+    var top_otu = [];
+    top_otu = names.slice(0, 10).map((item, i) => {
+      return `OTU ${item}`;
+    });
+    var otuLabels = sourceData[0].samples[dropdownID].otu_labels;
+    var hoverLabels = [];
+    hoverLabels = otuLabels.slice(0, 10);
+
+    // Print new demographic Info
+    var name = sourceData[0].metadata[dropdownID].id;
+    var ethnicity = sourceData[0].metadata[dropdownID].ethnicity;
+    var gender = sourceData[0].metadata[dropdownID].gender;
+    var age = sourceData[0].metadata[dropdownID].age;
+    var location = sourceData[0].metadata[dropdownID].location;
+    var bbtype = sourceData[0].metadata[dropdownID].bbtype;
+    var wfreq = sourceData[0].metadata[dropdownID].wfreq;
+    document.getElementById("sample-metadata")
+      .innerHTML += `<p><b>ID: </b>${name}<br><b>Ethnicity: </b>${ethnicity}<br><b>Gender: </b>${gender}<br><b>Age: </b>${age}<br><b>Location: </b>${location}<br><b>BBType: </b>${bbtype}<br><b>WFreq: </b>${wfreq}</p>`;
   
-      // Grab values from the data json object to build the plots
-      d3.json("/data/samples/json").then(function)
-      var sample_values = sample.sample_values;
-      var otu_ids = sample.otu_ids;
-    //   var otu_labels = data.otu_labels;
-  
-      var trace1 = {
-        type: "bar",
-        x: sample_values,
-        y: otu_ids,
-      };
-  
-    //   var layout = {
-    //     title: `Sample by OTU ID`,
-    //     xaxis: {
-    //         type: "linear"
-    //     },
-    //     yaxis: {
-    //       autorange: true,
-    //     }
-    //   };
-  
-    };
-  
-  buildPlot();
+    // Print plot and Bubble chart
+    buildPlot(top_values, top_otu)
+    buildbubble(names, sample_values)
+  };
 
-// Create dropdown menu
-function init() {
-    Plotly.newPlot("sample-metadata", trace1);
-}; //ends the function(init()
+  // Create initialize function
+  function init() {
+  }; //ends the function(init()
+  init();
+});
 
-
-init();
+// Set data promise
+const dataPromise = d3.json("samples.json");
