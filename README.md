@@ -1,5 +1,24 @@
-# 15_Plotly
+# Belly Button Biodiversity Dashboard
 
-Go to https://mitchklee35.github.io/15_Plotly_Biodiversity/ for website. 
+Data Analysis and Visualization Course
 
-The following script was written to organize and filter out what types of Biodiversity subjects had within their bellybutton. The test subject ID number gives you the specific subject. The demographic info gives you all the available info on the subject. Within both graphs it shows the type microbial species or "Operational Taxonomic Units". The bar chart shows the frequency and the bubble chart gives you a scale of the biodiversity. 
+### Installation
+
+```bash
+none
+```
+
+### Function
+Take ```JSON``` data and clean it to a convertable table so you can use it in visulaizations. 
+
+### Organization
+The data folder holds ```samples.json``` which has all of the data. The actual Javascript program cod is in ```app.js```. The website format is in HTML and is in ```index.html```
+
+### How to Run
+1. Go to https://mitchklee35.github.io/15_Plotly_Biodiversity/ for website.
+2. Choose a specific ID which is a test subject.
+3. The page will refresh to show you all the different infromation pulled from ```samples.json```
+
+### Result
+Dempgraphic info has all the information of the test subject. The bar chart shows the number of different microbial units living in the sampele. And the Bubble chart below has that graphed to show scale. <br/>
+![info](https://github.com/mitchklee35/14_javascript-challenge/blob/master/UFO-level-1/static/images/example.PNG)<br/>
