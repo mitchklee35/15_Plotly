@@ -12,7 +12,7 @@ none
 Take ```JSON``` data and clean it to a convertible table so you can use it in visulaizations. 
 
 ### Organization
-The data folder holds ```samples.json``` which has all of the data. The actual Javascript program cod is in ```app.js```. The website format is in HTML and is in ```index.html```
+The data folder holds ```samples.json``` which has all of the data. The actual Javascript program code is in ```app.js```. The website format is in HTML and is in ```index.html```
 
 ### How to Run
 1. Go to https://mitchklee35.github.io/15_Plotly_Biodiversity/ for website.
