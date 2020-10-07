@@ -21,4 +21,5 @@ The data folder holds ```samples.json``` which has all of the data. The actual J
 
 ### Result
 Dempgraphic info has all the information of the test subject. The bar chart shows the number of different microbial units living in the sampele. And the Bubble chart below has that graphed to show scale. <br/>
-![info](https://github.com/mitchklee35/14_javascript-challenge/blob/master/UFO-level-1/static/images/example.PNG)<br/>
+![info](https://github.com/mitchklee35/15_Plotly_Biodiversity/blob/master/images/website.PNG)<br/>
+![info](https://github.com/mitchklee35/15_Plotly_Biodiversity/blob/master/images/json.PNG)<br/>
