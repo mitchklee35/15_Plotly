@@ -9,7 +9,7 @@ none
 ```
 
 ### Function
-Take ```JSON``` data and clean it to a convertable table so you can use it in visulaizations. 
+Take ```JSON``` data and clean it to a convertible table so you can use it in visulaizations. 
 
 ### Organization
 The data folder holds ```samples.json``` which has all of the data. The actual Javascript program cod is in ```app.js```. The website format is in HTML and is in ```index.html```
