@@ -20,6 +20,6 @@ The data folder holds ```samples.json``` which has all of the data. The actual J
 3. The page will refresh to show you all the different infromation pulled from ```samples.json```
 
 ### Result
-Dempgraphic info has all the information of the test subject. The bar chart shows the number of different microbial units living in the sampele. And the Bubble chart below has that graphed to show scale. <br/>
+Demographic info has all the information of the test subject. The bar chart shows the number of different microbial units living in the sample. And the Bubble chart below has that graphed to show scale.<br/>
 ![info](https://github.com/mitchklee35/15_Plotly_Biodiversity/blob/master/images/website.PNG)<br/>
 ![info](https://github.com/mitchklee35/15_Plotly_Biodiversity/blob/master/images/json.PNG)<br/>
